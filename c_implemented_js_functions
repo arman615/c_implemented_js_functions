@@ -1,0 +1,267 @@
+#include <stdio.h>
+#include<stdlib.h>
+
+//concat()
+int* concat(int *arr1, int size1, int* arr2, int size2){
+    int* result=(int*)malloc(size1+size2*(sizeof(int)));
+    if(result==NULL){ 
+        printf("Memory alocation is failed.\n");
+        exit(1);
+    }
+    int i,j;
+    for(i =0;i<size1;++i){
+        i[result]=i[arr1];
+    }
+    for(j=0; j<size2; ++j){
+        (j+size1)[result]=j[arr2];
+    }
+    return result;
+}
+
+
+
+//every()
+bool every(int* arr, int size, bool (*callback)(int)) {
+    int i;
+    for (i = 0; i < size; i++) {
+        if (!callback(arr[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+//filter()
+int* filter(int*arr, int size, int* resultSize, bool(*callback)(int)){
+    int* filteredArray=(int*)malloc(size*sizeof(int));
+    if(filteredArray==NULL){
+        printf("Memory allocation is failed.\n");
+        exit(1);
+    }
+    int count=0;
+    for(int i=0;i<size;++i){
+        if(callback(arr[i])){
+            filteredArray[count]=arr[i];
+        }
+    }
+    *resultSize=count;
+    return filteredArray;
+}
+
+
+//flat()
+
+//forEach()
+void forEach(int* arr, int size, void(*callback)(int)){
+  for(int i=0; i<size; ++i){
+    callback(arr[i]);
+  }
+}
+
+
+//indexOf()
+int indexOf(int* arr, int size, int elem){
+    for(int i=0; i<size; ++i){
+        if(arr[i] = elem){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+
+//lastIndexOf()
+int indexOf(int* arr, int size, int elem){
+    for(int isize-1; i>=0; --i){
+        if(arr[i] = elem){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+//map()
+int* map(int* arr, int size, int (*callback)(int)){
+    int* tmp=(int*)malloc(size * sizeof(int));
+    for(int i=0; i<size; ++i){
+       tmp[i]= callback(arr[i]);
+    }
+    return tmp;
+}
+
+//reduce()
+int reduce(int* arr, int size, int (*Callback)(int, int), int initialValue) {
+    int res = initialValue;
+    for (int i = 0; i < size; i++) {
+        res = callback(res, arr[i]);
+    }
+    return res;
+}
+
+
+
+//reverse()
+void reverse(int* arr, int size){
+    int start=0;
+    int end=size-1;
+    while(start<end){
+        int tmp;
+        tmp=arr[start];
+        arr[start]=arr[end];
+        arr[end]=tmp;
+        ++start;
+        --end;
+    }
+}
+
+//slice()
+int* slice(int* arr, int start, int end) {
+    int size = end - start;
+    int* result = (int*)malloc(size * sizeof(int));
+
+    for (int i = start; i < end; i++) {
+        result[i - start] = arr[i];
+    }
+
+    return result;
+}
+
+
+//some()
+bool some(int* arr, int size, bool(*callback)(int)){
+    for (int i = 0; i < size; i++) {
+        if (callback(arr[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+//sort()
+void sort(int* arr, int size){
+    for(int i=0; i<size-1; ++i){
+        for(int j = 0; j<size-i-1; ++j){
+            if(arr[j]>arr[j+1]){
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
+
+
+
+//splice
+void splice(int* arr, int size, int start, int deleteCount, int* items, int itemCount) {
+    int newLength = size - deleteCount + itemCount;
+
+    for (int i = size - 1; i >= start + deleteCount; i--) {
+        arr[i + itemCount - deleteCount] = arr[i];
+    }
+    for (int i = 0; i < itemCount; i++) {
+        arr[start + i] = items[i];
+    }
+    arr = (int*)realloc(arr, newLength * sizeof(int));
+}
+
+
+//entries()
+struct Entry {
+    int index;
+    int value;
+};
+
+struct Entry* entries(int* arr, int size) {
+    struct Entry* result = (struct Entry*)malloc(size * sizeof(struct Entry));
+
+    for (int i = 0; i < size; i++) {
+        result[i].index = i;
+        result[i].value = arr[i];
+    }
+
+    return result;
+}
+
+
+//fill()
+void fill(int* arr, int size, int value) {
+    for (int i = 0; i < size; i++) {
+        arr[i] = value;
+    }
+}
+
+//find()
+int find(int* arr, int size, bool(*callback)(int)){
+    for(int i=0; i<size; ++i){
+        if(callback(arr[i])){
+            return arr[i];
+        }
+    }
+    
+}
+
+
+//findIndex()
+int findIndex(int* arr, int size, bool(*callback)(int)){
+    for(int i=0; i<size; ++i){
+        if(callback(arr[i])){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+//findLastIndex()
+int findIndex(int* arr, int size, bool(*callback)(int)){
+    for(int i=size-1; i>=0; --i){
+        if(callback(arr[i])){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+//includes()
+bool includes(int* arr, int size, int elem){
+    for(int i=0; i<size; ++i){
+       if (arr[i] == elem) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+//join()
+char* join(int* arr, int size, const char* separator) {
+    int separatorLength = strlen(separator);
+    int totalLength = (size - 1) * separatorLength; 
+    for (int i = 0; i < size; i++) {
+        totalLength += snprintf(NULL, 0, "%d", arr[i]);
+    }
+
+    char* result = (char*)malloc((totalLength + 1) * sizeof(char));
+    result[0] = '\0';
+
+    char temp[12]; 
+
+    for (int i = 0; i < size; i++) {
+        if (i > 0) {
+            strcat(result, separator);
+        }
+        sprintf(temp, "%d", arr[i]);
+        strcat(result, temp);
+    }
+
+    return result;
+}
+
+
+
